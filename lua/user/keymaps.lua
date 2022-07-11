@@ -50,7 +50,8 @@ keymap("i", "jk", "<ESC>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Plugins --
+-- Terminal --
+keymap("n", "<leader>tt", ":ToggleTerm<CR>", { noremap = true })
 
 -- NvimTree
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
