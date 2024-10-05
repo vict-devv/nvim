@@ -2,7 +2,6 @@
 vim.keymap.set({ "v", "i" }, "jk", "<ESC>")
 vim.keymap.set("n", "<leader>x", ":source %<CR>")
 vim.keymap.set("n", "<leader>w", ":w<CR>")
-vim.keymap.set("i", "<leader>w", "<ESC>:w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 vim.keymap.set("n", "<leader>h", ":noh<CR>")
 vim.keymap.set("n", "<leader>sh", ":split<CR>")
