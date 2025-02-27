@@ -1,0 +1,27 @@
+vim.g.mapleader = " "
+
+local opt = vim.opt
+opt.number = true
+opt.relativenumber = true
+opt.autoindent = true
+opt.cursorline = true
+opt.ignorecase = true
+opt.splitright = true
+opt.splitbelow = true
+opt.swapfile = false
+opt.ruler = true
+opt.colorcolumn = "120"
+opt.textwidth = 120
+opt.wrap = true
+opt.encoding = "utf-8"
+opt.expandtab = true
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftwidth = 2
+opt.termguicolors = true
+opt.clipboard = "unnamedplus"
+opt.hlsearch = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.smartindent = true
+opt.timeoutlen = 400
