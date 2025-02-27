@@ -49,21 +49,9 @@ return {
 					gitsigns.blame_line({ full = true })
 				end)
 
-				map("n", "<leader>hd", gitsigns.diffthis)
-
-				map("n", "<leader>hD", function()
-					gitsigns.diffthis("~")
-				end)
-
-				map("n", "<leader>hQ", function()
-					gitsigns.setqflist("all")
-				end)
-				map("n", "<leader>hq", gitsigns.setqflist)
-
 				-- Toggles
-				map("n", "<leader>htb", gitsigns.toggle_current_line_blame)
-				map("n", "<leader>htd", gitsigns.toggle_deleted)
-				map("n", "<leader>htw", gitsigns.toggle_word_diff)
+				map("n", "<leader>hl", gitsigns.toggle_current_line_blame)
+				map("n", "<leader>hw", gitsigns.toggle_word_diff)
 
 				-- Text object
 				map({ "o", "x" }, "ih", gitsigns.select_hunk)
