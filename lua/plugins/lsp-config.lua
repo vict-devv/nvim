@@ -10,6 +10,8 @@ return {
     })
     lspconfig.gopls.setup({
       capabilities = capabilities,
+      -- Go Run
+      vim.cmd("autocmd FileType go nmap <Leader>dr :!go run %<CR>")
     })
 
     vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, { desc = "docs hover", noremap = true, silent = true })
