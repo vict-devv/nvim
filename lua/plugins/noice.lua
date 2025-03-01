@@ -1,4 +1,5 @@
-return {
+return {}
+--[[ return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	dependencies = {
@@ -28,4 +29,4 @@ return {
 			background_colour = "#000000",
 		})
 	end,
-}
+} ]]
