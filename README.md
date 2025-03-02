@@ -22,7 +22,6 @@ I'm [Lazy plugin manager](https://github.com/folke/lazy.nvim) so after cloning t
  - [gitsigns](https://github.com/lewis6991/gitsigns.nvim) - buffer integration for Git. 
  - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - LSP client configuration plugin. 
  - [lualine](https://github.com/nvim-lualine/lualine.nvim) - cool neovim status line.
- - [noice](https://github.com/folke/noice.nvim) - aesthetic enhancements for neovim.
  - [none-ls](https://github.com/nvimtools/none-ls.nvim) - hook non-LSP resources into LSP client.
  - [nvim-surround](https://github.com/kylechui/nvim-surround) - surround selections with ease.
  - [telescope](https://github.com/nvim-telescope/telescope.nvim) - highly extendable fuzzy finder over lists.
