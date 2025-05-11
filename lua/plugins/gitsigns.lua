@@ -2,7 +2,7 @@ return {
     "lewis6991/gitsigns.nvim",
     config = function()
         require("gitsigns").setup({
-            troube = true,
+            trouble = true,
             on_attach = function(bufnr)
                 local gitsigns = require('gitsigns')
 
