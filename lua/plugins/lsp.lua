@@ -36,7 +36,7 @@ return {
 
         require('mason').setup({})
         require('mason-lspconfig').setup({
-            ensure_installed = { "rust_analyzer", "gopls", "html", "eslint", "sqls" },
+            ensure_installed = { "rust_analyzer", "gopls", "emmet_ls", "html", "eslint", "sqls" },
             handlers = {
                 function(server_name)
                     require('lspconfig')[server_name].setup({
@@ -60,6 +60,7 @@ return {
 
         local cmp = require('cmp')
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        local luasnip = require("luasnip")
         local lspkind = require("lspkind")
 
         cmp.setup({
@@ -77,6 +78,25 @@ return {
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ['<C-Space>'] = cmp.mapping.complete(),
+                ["<Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_next_item()
+                    elseif luasnip.locally_jumpable(1) then
+                        luasnip.jump(1)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
             }),
             snippet = {
                 expand = function(args)
