@@ -26,6 +26,7 @@ I'm [Lazy plugin manager](https://github.com/folke/lazy.nvim) so after cloning t
  - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - tree-sitter syntax highlighter for neovim. 
  - [render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim) - nice plugin that renders markdown inside neovim.
  - [live-server](https://github.com/barrett-ruth/live-server.nvim) - live-server plugin for autoloading html,css and js files in the browser.  
+ - [none-ls](https://github.com/nvimtools/none-ls.nvim) - none-ls fills the gap between the LSP client and the formatters and linters tools binaries. 
 
 ## File Browser
 I'm using the default file browser explorer `netrw`. Check `:help netwr-quickmaps` for keymaps and how to use it.
