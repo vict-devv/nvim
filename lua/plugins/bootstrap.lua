@@ -683,6 +683,44 @@ require("lazy").setup({
 	{ "tpope/vim-fugitive" },
 
 	-- ══════════════════════════════════════════
+	--  MARKDOWN — render-markdown.nvim
+	-- ══════════════════════════════════════════
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		ft = { "markdown" }, -- lazy-load: only activates for .md files
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"echasnovski/mini.icons",
+		},
+		opts = {
+			-- Render in normal/command/terminal modes; raw syntax in insert
+			-- mode so editing is never obscured.
+			render_modes = { "n", "c", "t" },
+			heading = {
+				icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+				sign = false,
+			},
+			code = {
+				sign = false,
+				width = "block",
+				right_pad = 1,
+			},
+			bullet = {
+				icons = { "●", "○", "◆", "◇" },
+			},
+			checkbox = {
+				unchecked = { icon = "󰄱 " },
+				checked = { icon = "󰱒 " },
+			},
+		},
+		keys = {
+			{ "<leader>mt", "<cmd>RenderMarkdown toggle<cr>", ft = "markdown", desc = "Toggle markdown render" },
+			{ "<leader>me", "<cmd>RenderMarkdown enable<cr>", ft = "markdown", desc = "Enable markdown render" },
+			{ "<leader>md", "<cmd>RenderMarkdown disable<cr>", ft = "markdown", desc = "Disable markdown render" },
+		},
+	},
+
+	-- ══════════════════════════════════════════
 	--  AI — Claude Code
 	-- ══════════════════════════════════════════
 	{
