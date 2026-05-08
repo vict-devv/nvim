@@ -478,6 +478,10 @@ require("lazy").setup({
 					"dockerfile",
 					"hcl",
 					"toml",
+					"javascript",
+					"typescript",
+					"tsx",
+					"jsdoc",
 				},
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -507,7 +511,16 @@ require("lazy").setup({
 			-- 1. Mason: install servers automatically
 			require("mason").setup({ ui = { border = "rounded" } })
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "gopls", "pyright", "terraformls", "yamlls", "bashls" },
+				ensure_installed = {
+					"lua_ls",
+					"gopls",
+					"pyright",
+					"terraformls",
+					"yamlls",
+					"bashls",
+					"ts_ls",
+					"eslint",
+				},
 				automatic_installation = true,
 			})
 
@@ -528,12 +541,12 @@ require("lazy").setup({
 			})
 
 			-- Servers that only need capabilities injected
-			for _, server in ipairs({ "gopls", "pyright", "terraformls", "yamlls", "bashls" }) do
+			for _, server in ipairs({ "gopls", "pyright", "terraformls", "yamlls", "bashls", "ts_ls", "eslint" }) do
 				vim.lsp.config(server, { capabilities = capabilities })
 			end
 
 			-- 4. Enable all servers (replaces lspconfig[server].setup{})
-			vim.lsp.enable({ "lua_ls", "gopls", "pyright", "terraformls", "yamlls", "bashls" })
+			vim.lsp.enable({ "lua_ls", "gopls", "pyright", "terraformls", "yamlls", "bashls", "ts_ls", "eslint" })
 
 			-- 5. Diagnostic signs & display
 			local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -630,6 +643,12 @@ require("lazy").setup({
 				yaml = { "prettier" },
 				json = { "prettier" },
 				sh = { "shfmt" },
+				javascript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
+				css = { "prettier" },
+				html = { "prettier" },
 			},
 			format_on_save = { lsp_fallback = true, timeout_ms = 500 },
 		},
