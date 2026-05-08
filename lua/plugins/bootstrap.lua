@@ -683,6 +683,58 @@ require("lazy").setup({
 	{ "tpope/vim-fugitive" },
 
 	-- ══════════════════════════════════════════
+	--  AI — Claude Code
+	-- ══════════════════════════════════════════
+	{
+		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		opts = {
+			-- auto_start: launch the IPC server when Neovim starts so Claude
+			-- Code CLI can connect immediately without a manual toggle first.
+			auto_start = true,
+			-- track_selection: keeps Claude aware of what you have selected /
+			-- what file/line you are on — enables context-aware responses.
+			track_selection = true,
+			-- Terminal appears as a centered floating window (consistent with
+			-- the rest of the config's rounded-border aesthetic).
+			terminal = {
+				provider = "snacks",
+				snacks_win_opts = {
+					position = "float",
+					width = 0.85,
+					height = 0.85,
+					border = "rounded",
+					keys = {
+						-- <leader>ac closes the float from terminal mode too
+						claude_hide = {
+							"<leader>ac",
+							function(self)
+								self:hide()
+							end,
+							mode = "t",
+							desc = "Hide Claude",
+						},
+					},
+				},
+			},
+		},
+		keys = {
+			-- <leader>a group — mirrors the LazyVim convention for AI tools
+			{ "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+			{ "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude", mode = { "n", "v" } },
+			{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume last session" },
+			{ "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue conversation" },
+			-- Context helpers
+			{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add buffer to Claude" },
+			{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", desc = "Send selection", mode = "v" },
+			-- Diff management (Claude edits land as diffs)
+			{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
+	},
+
+	-- ══════════════════════════════════════════
 	--  QUALITY-OF-LIFE
 	-- ══════════════════════════════════════════
 	{
@@ -692,6 +744,7 @@ require("lazy").setup({
 			delay = 500,
 			icons = { mappings = true },
 			spec = {
+				{ "<leader>a", group = "ai / claude" },
 				{ "<leader>b", group = "buffers" },
 				{ "<leader>f", group = "find / files" },
 				{ "<leader>g", group = "git" },
