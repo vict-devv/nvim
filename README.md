@@ -1,16 +1,17 @@
 # Neovim Config
 
 A modular Neovim setup in Lua with a LazyVim-style UI, tuned for DevOps/Cloud
-workflows (Go, Terraform, Python, YAML, Bash).
+and full-stack workflows (Go, Terraform, Python, JavaScript/TypeScript, YAML, Bash).
 
 ## Requirements
 
-- **Neovim ≥ 0.11** (required for `vim.lsp.config` / `vim.lsp.enable` API)
-- **Git** and **make** (lazy.nvim bootstrap + fzf-native build)
+- **Neovim ≥ 0.11** — required for `vim.lsp.config` / `vim.lsp.enable` API
+- **Git** and **make** — lazy.nvim bootstrap + fzf-native build
 - A **[Nerd Font](https://www.nerdfonts.com/)** — icons throughout the UI depend on it
 - **[ripgrep](https://github.com/BurntSushi/ripgrep)** — live grep via Snacks picker
 - **[fd](https://github.com/sharkdp/fd)** — faster file finding
 - **[lazygit](https://github.com/jesseduffield/lazygit)** — optional, for the git TUI (`<leader>gs`)
+- **[Claude Code CLI](https://claude.ai/download)** — required for claudecode.nvim (`<leader>ac`)
 
 ## Installation
 
@@ -21,7 +22,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 # Drop the config in place
 cp -r nvim/ ~/.config/nvim
 
-# Open Neovim — lazy.nvim bootstraps itself, then installs all plugins
+# Open Neovim — lazy.nvim bootstraps itself then installs all plugins
 nvim
 ```
 
@@ -58,6 +59,8 @@ manage them manually, or `:checkhealth vim.lsp` to verify server status.
 | Cmdline / messages | [noice.nvim](https://github.com/folke/noice.nvim) | Popup cmdline, LSP progress, fancy notifications |
 | Status line | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Global statusline |
 | Buffer tabs | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | Aura-themed tab bar |
+| **Markdown** | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | In-editor rendered preview — headings, code blocks, checkboxes, bullets |
+| **AI** | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code IDE integration (floating terminal + diff) |
 | Motion | [vim-easymotion](https://github.com/easymotion/vim-easymotion) | 2-char jump anywhere |
 | Text objects | [vim-surround](https://github.com/tpope/vim-surround) | Add / change / delete surrounds |
 | Syntax | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Highlight + indent + incremental selection |
@@ -78,6 +81,8 @@ manage them manually, or `:checkhealth vim.lsp` to verify server status.
 | `lua_ls` | Lua |
 | `gopls` | Go |
 | `pyright` | Python |
+| `ts_ls` | JavaScript & TypeScript |
+| `eslint` | JS/TS linting via LSP |
 | `terraformls` | Terraform / HCL |
 | `yamlls` | YAML |
 | `bashls` | Bash / Shell |
@@ -85,28 +90,27 @@ manage them manually, or `:checkhealth vim.lsp` to verify server status.
 ### Treesitter parsers (auto-installed)
 
 `lua` · `go` · `python` · `terraform` · `yaml` · `json` · `bash` ·
-`markdown` · `markdown_inline` · `dockerfile` · `hcl` · `toml`
+`markdown` · `markdown_inline` · `dockerfile` · `hcl` · `toml` ·
+`javascript` · `typescript` · `tsx` · `jsdoc`
 
-### Formatters (installed separately, e.g. via Mason or system package manager)
+### Formatters (install separately via Mason or your system package manager)
 
-| Formatter | Filetype |
+| Formatter | Filetypes |
 |---|---|
 | `stylua` | Lua |
 | `gofmt` | Go |
 | `black` | Python |
 | `terraform_fmt` | Terraform |
-| `prettier` | YAML, JSON |
+| `prettier` | YAML, JSON, JS, JSX, TS, TSX, CSS, HTML |
 | `shfmt` | Shell |
 
 ---
 
 ## Keymaps
 
-**Leader key:** `Space`
-**Local leader:** `\`
+**Leader key:** `Space` · **Local leader:** `\`
 
-Press `<leader>` and pause — which-key will show a labelled popup of all
-available bindings for that prefix.
+Press `<leader>` and pause — which-key shows a labelled popup for every prefix.
 
 ### Navigation
 
@@ -186,6 +190,37 @@ available bindings for that prefix.
 | `<C-space>` | Expand treesitter selection |
 | `<bs>` | Shrink treesitter selection |
 
+### Markdown
+
+> These keymaps are only active when the current buffer is a `.md` file.
+> The plugin renders headings, code blocks, checkboxes, and bullet icons
+> in Normal mode, and automatically hides the decorations in Insert mode
+> so raw editing is never obscured.
+
+| Key | Action |
+|---|---|
+| `<leader>mt` | Toggle markdown render on/off |
+| `<leader>me` | Enable markdown render |
+| `<leader>md` | Disable markdown render |
+
+### AI — Claude Code
+
+> Requires the [Claude Code CLI](https://claude.ai/download) to be installed
+> and authenticated. Run `which claude` after install to verify it's on your
+> `$PATH`. The IPC server starts automatically when Neovim opens.
+
+| Key | Mode | Action |
+|---|---|---|
+| `<leader>ac` | n | Toggle Claude float (open / close) |
+| `<leader>af` | n, v | Focus Claude terminal |
+| `<leader>ar` | n | Resume last session (`--resume`) |
+| `<leader>aC` | n | Continue conversation (`--continue`) |
+| `<leader>ab` | n | Add current buffer as context |
+| `<leader>as` | v | Send visual selection to Claude |
+| `<leader>aa` | n | Accept Claude diff |
+| `<leader>ad` | n | Deny Claude diff |
+| `<leader>ac` | t | Hide Claude float (from inside terminal) |
+
 ### Git
 
 | Key | Action |
@@ -259,9 +294,8 @@ available bindings for that prefix.
 ## Notable Behaviours
 
 **Transparency** — `Normal`, `NormalFloat`, `NormalNC`, `SignColumn`,
-`StatusLine`, and `WinSeparator` all have `bg = NONE`, letting your
-terminal's own background show through. Set your terminal emulator's
-opacity to taste.
+`StatusLine`, and `WinSeparator` all have `bg = NONE`, letting your terminal's
+own background show through. Set your terminal emulator's opacity to taste.
 
 **Format on save** — conform.nvim runs automatically on `BufWritePre`.
 Use `<leader>cf` for on-demand formatting without saving.
@@ -270,18 +304,37 @@ Use `<leader>cf` for on-demand formatting without saving.
 `vim.lsp.config()` and enabled with `vim.lsp.enable()`. The old
 `require('lspconfig')[server].setup{}` pattern is not used.
 
-**Bufferline only appears with 2+ buffers** — `always_show_bufferline =
-false` keeps the UI clean when editing a single file.
+**TypeScript / JavaScript** — `ts_ls` attaches when a `tsconfig.json` or
+`package.json` is found in the project root. Opening a lone `.ts` file outside
+a project folder will not activate it — this is standard LSP root-detection
+behaviour. `eslint` runs alongside `ts_ls` and surfaces lint errors as LSP
+diagnostics so they appear in the gutter and with `[d` / `]d`.
 
-**Snacks explorer replaces netrw** — opening a directory directly (e.g.
-`nvim .`) will launch the Snacks file explorer instead of netrw.
+**Markdown rendering** — render-markdown.nvim decorates `.md` files with
+styled headings (level icons `󰲡`–`󰲫`), fenced code block backgrounds,
+bullet icons per nesting level, and checkbox icons. Decorations are active
+in Normal/Command/Terminal mode and automatically hidden in Insert mode so
+you always edit raw text. Use `<leader>mt` to toggle it on/off at any time.
 
-**Persistent undo** — undo history survives across sessions. Undo files
-are stored in Neovim's state directory (`stdpath("state")/undo`).
+**Claude Code integration** — claudecode.nvim opens a floating terminal that
+runs the `claude` CLI. It registers an IPC server when Neovim starts
+(`auto_start = true`) so the CLI can connect and receive editor context
+(open file, cursor position, active selection) without any extra steps.
+Diffs proposed by Claude appear as standard Neovim diffs — accept with
+`<leader>aa` or deny with `<leader>ad`.
+
+**Bufferline only appears with 2+ buffers** — `always_show_bufferline = false`
+keeps the UI clean when editing a single file.
+
+**Snacks explorer replaces netrw** — opening a directory (e.g. `nvim .`) will
+launch the Snacks file explorer instead of netrw.
+
+**Persistent undo** — undo history survives across sessions, stored in
+Neovim's state directory (`stdpath("state")/undo`).
 
 **Smart case search** — searches are case-insensitive unless you type a
 capital letter.
 
-**Clipboard** — yanks go directly to the system clipboard
-(`unnamedplus`). Use `<leader>p` in visual mode to paste from the unnamed
-register without overwriting your yank.
+**Clipboard** — yanks go directly to the system clipboard (`unnamedplus`).
+Use `<leader>p` in visual mode to paste from the unnamed register without
+overwriting your yank.
