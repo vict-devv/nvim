@@ -541,9 +541,32 @@ require("lazy").setup({
 			})
 
 			-- Servers that only need capabilities injected
-			for _, server in ipairs({ "gopls", "pyright", "terraformls", "yamlls", "bashls", "ts_ls", "eslint" }) do
+			for _, server in ipairs({ "gopls", "pyright", "terraformls", "bashls", "ts_ls", "eslint" }) do
 				vim.lsp.config(server, { capabilities = capabilities })
 			end
+
+			-- Kubernetes specific yamlls config
+			vim.lsp.config("yamlls", {
+				capabilities = capabilities,
+				settings = {
+					yaml = {
+						schemaStore = {
+							enable = true,
+							url = "https://www.schemastore.org/api/json/catalog.json",
+						},
+						schemas = {
+							kubernetes = {
+								"*.k8s.yaml",
+								"*.k8s.yml",
+							},
+						},
+						validate = true,
+						hover = true,
+						completion = true,
+						format = { enable = false },
+					},
+				},
+			})
 
 			-- 4. Enable all servers (replaces lspconfig[server].setup{})
 			vim.lsp.enable({ "lua_ls", "gopls", "pyright", "terraformls", "yamlls", "bashls", "ts_ls", "eslint" })
