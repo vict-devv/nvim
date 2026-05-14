@@ -54,6 +54,13 @@ map("x", "<leader>p", [["_dP]], "Paste without yank")
 map("n", "<leader>cf", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, "Format buffer")
+-- Disable C and D commands to copy content to yank register
+map("n", "c", [["_c]], "Change (no yank)")
+map("n", "C", [["_C]], "Change to EOL (no yank)")
+map("n", "d", [["_d]], "Delete (no yank)")
+map("n", "D", [["_D]], "Delete to EOL (no yank)")
+map("v", "c", [["_c]], "Change (no yank)")
+map("v", "d", [["_d]], "Delete (no yank)")
 
 -- ── Toggle ────────────────────────────────
 -- Toggle relative line numbers
